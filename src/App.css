@@ -1,38 +1,38 @@
-.App {
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700;800;900&family=Roboto+Slab:wght@400;600;800;900&family=Roboto:wght@400;700;900&display=swap');
+/* font-family: 'Raleway', sans-serif;
+font-family: 'Roboto', sans-serif;
+font-family: 'Roboto Slab', serif; */
+*{
+  padding: 0;
+  border: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.flex{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.mainHeading{
+  font-family: 'Roboto Slab', serif;
+  font-size: 45px;
+  color: white;
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.mainHeading span{
+  color: #30dba5;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.MuiAlert-root{
+  position: absolute;
+  top: 20px;
+  left: -100px;
+  animation: alert 500ms ease-in-out  1 forwards;
+}
+@keyframes alert{
+  0%{
+    left: -500px;
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+  100%{
+    left: 20px;
   }
 }
