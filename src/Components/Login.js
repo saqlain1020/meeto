@@ -6,7 +6,8 @@ import bg from "../Images/Login-bg.jpg"
 import firebase from "../Util/Firebase"
 import swal from "@sweetalert/with-react";
 import MuiAlert from '@material-ui/lab/Alert';
-import alert from "../Util/Alert"
+import { connect } from 'react-redux';
+import {signInWithEmailPassword, loginwithfacebook,signUpWithEmailPassword} from '../Redux/user/userActions'
 
 const styles = (theme) => ({
     wrapper: {
@@ -29,7 +30,7 @@ const styles = (theme) => ({
         height: "100vh",
     },
     loginWrapper: {
-        height: "400px",
+        height: "450px",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
@@ -87,26 +88,11 @@ class Login extends React.Component {
         })
     }
     facebookLogin = async () => {
-        var provider = new firebase.auth.FacebookAuthProvider();
-        firebase.auth().signInWithPopup(provider).then(function (result) {
-            // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-            var token = result.credential.accessToken;
-            console.log(token)
-            // The signed-in user info.
-            var user = result.user;
-            console.log(user)
-            // ...
-        }).catch(function (error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // The email of the user's account used.
-            var email = error.email;
-            // The firebase.auth.AuthCredential type that was used.
-            var credential = error.credential;
-            console.log(error)
-            // ...
-        });
+        try {
+            this.props.loginwithfacebook();
+         } catch (error) {
+             this.alert(error.message,"error")
+         }
     }
     alert=(msg,severity)=>{
         this.setState({
@@ -116,16 +102,17 @@ class Login extends React.Component {
     login = async () => {
         const { email, password } = this.state;
         try {
-            let user = await firebase.auth().signInWithEmailAndPassword(email, password);
-            console.log(user)
+           this.props.signInWithEmailPassword(email,password);
         } catch (error) {
             this.alert(error.message,"error")
-            // this.setState({
-            //     alert: <Alert severity="error">{error.message}</Alert>
-            // }, () => setTimeout(() => { this.setState({ alert: "" }) }, 2000))
-
-
-            // swal(error.message,null,"error");
+        }
+    }
+    signUp = async () => {
+        const { email, password } = this.state;
+        try {
+           this.props.signUpWithEmailPassword(email,password);
+        } catch (error) {
+            this.alert(error.message,"error")
         }
     }
     render = () => {
@@ -153,6 +140,7 @@ class Login extends React.Component {
                             </Grid>
                         </Grid>
                         <Button onClick={this.login} className={classes.loginBtn}>Login</Button>
+                        <Button onClick={this.signUp} className={classes.loginBtn}>SignUP</Button>
                     </div>
 
                 </Container>
@@ -163,4 +151,10 @@ class Login extends React.Component {
     }
 }
 
-export default withStyles(styles)(Login);
+var actions = {
+    signInWithEmailPassword,
+    loginwithfacebook,
+    signUpWithEmailPassword,
+}
+
+export default connect(null,actions)(withStyles(styles)(Login));
