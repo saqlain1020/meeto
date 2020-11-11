@@ -1,0 +1,1 @@
+export var GETSIMUSER = "GET_SIMILAR_USERS";

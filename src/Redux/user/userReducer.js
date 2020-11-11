@@ -1,4 +1,5 @@
-import { LOGINWITHFACEBOOK, SETLOCATION, SETUSER, SIGNINEMAILPASS, SIGNOUT, SIGNUP } from "./userConstants";
+import { INITPROFILE, LOGINWITHFACEBOOK, SETLOCATION, SETUSER, SIGNINEMAILPASS, SIGNOUT, SIGNUP } from "./userConstants";
+import firebase from "../../Util/Firebase"
 
 var initialState = {};
 
@@ -16,9 +17,13 @@ var userReducer = (state = initialState, action) => {
         case SETUSER:
             return payload.user;
         case SETLOCATION:
-            return {...state,location:payload.location}
+            let user = {...state,location:payload.location};
+            return user;
+        case INITPROFILE:
+            return {...state,...payload.obj}
         default:
             return state;
     }
+    
 }
 export default userReducer;

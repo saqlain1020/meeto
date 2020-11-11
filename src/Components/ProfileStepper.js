@@ -12,6 +12,8 @@ import { geolocated } from 'react-geolocated';
 import Draggable from 'react-draggable';
 import RoomIcon from '@material-ui/icons/Room';
 import Test from './Test';
+import { connect } from 'react-redux';
+import {saveProfile,uploadImages} from '../Redux/user/userActions'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -48,7 +50,8 @@ function HorizontalLabelPositionBelowStepper(props) {
             phoneNumber,
             nickname,
         }
-        
+        props.saveProfile(obj);
+        props.uploadImages(images);
     }
 
     const handleNext = () => {
@@ -62,17 +65,16 @@ function HorizontalLabelPositionBelowStepper(props) {
     const onCircleInteraction3 = (childKey, childProps, mouse) => {
         // this.setState({draggable: true});
         // function is just a stub to test callbacks  
-        console.log('onCircleInteraction called with', childKey, childProps, mouse);
+        // console.log('onCircleInteraction called with', childKey, childProps, mouse);
 
     }
 
     const handleReset = () => {
-        setActiveStep(3);
+        setActiveStep(0);
         setImages([])
         setBeverages([])
         setDuration([])
     };
-    console.log(props)
     return (
         <div className={classes.root}>
             <Stepper activeStep={activeStep} alternativeLabel>
@@ -86,9 +88,10 @@ function HorizontalLabelPositionBelowStepper(props) {
                 {activeStep === steps.length ? (
                     <div>
                         <Typography className={classes.instructions}>All steps completed</Typography>
+                        <Button variant="contained" color="primary" onClick={saveData}>Save Data</Button>
                         <Button onClick={handleReset}>Reset</Button>
                     </div>
-                ) : (
+                )  : (
                         <div className={classes.instructions}>
                             {function () {
                                 switch (activeStep) {
@@ -190,7 +193,7 @@ function HorizontalLabelPositionBelowStepper(props) {
               </Button>
                                 <Button variant="contained" color="primary" onClick={handleNext}>
                                     {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                                    {activeStep === steps.length - 1 && saveData()}
+                                    {/* {activeStep === steps.length - 1 && saveData()} */}
                                 </Button>
                             </div>
                         </div>
@@ -200,4 +203,12 @@ function HorizontalLabelPositionBelowStepper(props) {
     );
 }
 
-export default geolocated()(HorizontalLabelPositionBelowStepper);
+var mapState = (state) =>({
+    user: state.user
+})
+var actions = {
+    saveProfile,
+    uploadImages,
+}
+
+export default connect(mapState,actions)(geolocated()(HorizontalLabelPositionBelowStepper));

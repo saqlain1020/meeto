@@ -8,6 +8,9 @@ font-family: 'Roboto Slab', serif; */
   margin: 0;
   box-sizing: border-box;
 }
+.bg{
+  background: #dfe6e9;
+}
 .flex{
   display: flex;
   justify-content: center;
@@ -35,4 +38,26 @@ font-family: 'Roboto Slab', serif; */
   100%{
     left: 20px;
   }
+}
+.tickBtn{
+  color: "green";
+  font-size: "35px";
+  cursor: "pointer";
+}
+.crossBtn{
+  color: "red";
+  font-size: "35px";
+  cursor: "pointer";
+}
+.similarUserCardOptions{
+  display: "grid";
+  grid-template-columns: min-content 1fr min-content;
+  justify-content: center;
+  align-items: center;
+}
+.similarUserCard{
+
+}
+.similarUserCard>div>h1{
+text-align: center;
 }
