@@ -6,6 +6,7 @@ import Routes from './Routes';
 import { setUser } from './Redux/user/userActions'
 import { connect } from 'react-redux'
 import firebase from './Util/Firebase'
+import { setAlert } from './Redux/alert/alertActions';
 
 
 class App extends React.Component {
@@ -23,10 +24,16 @@ class App extends React.Component {
         this.props.history.push("/Login");
       }
     })
+    window.onerror = (message, source, lineno, colno, error)=> {
+      this.props.setAlert(message,"error");
+    }
+    // this.props.setAlert("You have succesfull Logged","success");
   }
   render = () => {
+    
     return (
       <div>
+        {this.props.alert}
         <Routes />
       </div>
     );
@@ -35,7 +42,12 @@ class App extends React.Component {
 
 var actions = {
   setUser,
+  setAlert,
 }
 
-export default connect(null, actions)(withRouter(App));
+var mapState = (state)=>({
+  alert: state.alert
+})
+
+export default connect(mapState, actions)(withRouter(App));
 

@@ -2,6 +2,7 @@ import firebase from '../../Util/Firebase'
 import { INITPROFILE, LOGINWITHFACEBOOK, SETLOCATION, SETUSER, SIGNINEMAILPASS, SIGNOUT, SIGNUP } from "./userConstants"
 import swal from "sweetalert";
 import store from '../store'
+import { setAlert } from './../alert/alertActions';
 
 export var signInWithEmailPassword = (email, password) => async (dispatch) => {
     try {
@@ -24,7 +25,7 @@ export var signInWithEmailPassword = (email, password) => async (dispatch) => {
             }
         })
     } catch (error) {
-        swal(error.message, "", "error")
+        console.log(error);
     }
 
 }
@@ -61,7 +62,7 @@ export var loginwithfacebook = () => async (dispatch) => {
             })
         })
     } catch (error) {
-        swal(error.message, "", "error")
+        console.log(error)
     }
 
 }
@@ -91,7 +92,7 @@ export var signUpWithEmailPassword = (email, password) => async (dispatch) => {
             }
         })
     } catch (error) {
-        swal(error.message, "", "error");
+        console.log(error);
     }
 
 }

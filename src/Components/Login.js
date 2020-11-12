@@ -8,6 +8,7 @@ import swal from "@sweetalert/with-react";
 import MuiAlert from '@material-ui/lab/Alert';
 import { connect } from 'react-redux';
 import {signInWithEmailPassword, loginwithfacebook,signUpWithEmailPassword} from '../Redux/user/userActions'
+import { setAlert } from './../Redux/alert/alertActions';
 
 const styles = (theme) => ({
     wrapper: {
@@ -71,16 +72,11 @@ const styles = (theme) => ({
     }
 })
 
-function Alert(props) {
-    return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
-
 class Login extends React.Component {
     // const classes = useStyle();
     state = {
         email: "",
         password: "",
-        alert: "",
     }
     onchange = (e) => {
         this.setState({
@@ -91,20 +87,15 @@ class Login extends React.Component {
         try {
             this.props.loginwithfacebook();
          } catch (error) {
-             this.alert(error.message,"error")
+            this.props.setAlert(error.message,"error")
          }
-    }
-    alert=(msg,severity)=>{
-        this.setState({
-            alert: <Alert severity={severity}>{msg}</Alert>
-        }, () => setTimeout(() => { this.setState({ alert: "" }) }, 2000))
     }
     login = async () => {
         const { email, password } = this.state;
         try {
            this.props.signInWithEmailPassword(email,password);
         } catch (error) {
-            this.alert(error.message,"error")
+            this.props.setAlert(error.message,"error")
         }
     }
     signUp = async () => {
@@ -112,7 +103,7 @@ class Login extends React.Component {
         try {
            this.props.signUpWithEmailPassword(email,password);
         } catch (error) {
-            this.alert(error.message,"error")
+            this.props.setAlert(error.message,"error")
         }
     }
     render = () => {
@@ -144,8 +135,6 @@ class Login extends React.Component {
                     </div>
 
                 </Container>
-                {this.state.alert}
-                
             </div>
         );
     }
@@ -155,6 +144,7 @@ var actions = {
     signInWithEmailPassword,
     loginwithfacebook,
     signUpWithEmailPassword,
+    setAlert,
 }
 
 export default connect(null,actions)(withStyles(styles)(Login));
