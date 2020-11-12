@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, withStyles } from '@material-ui/core';
+import { Button, Card, CardContent, Modal, withStyles } from '@material-ui/core';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getUsers } from '../Redux/similarUsers/similarUsersActions'
@@ -6,8 +6,10 @@ import firebase from '../Util/Firebase'
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
 import AwesomeSlider from 'react-awesome-slider';
+import swal from 'sweetalert2';
 import { v4 as uuid } from 'uuid'
 import 'react-awesome-slider/dist/styles.css';
+import MeetLocationMap from './MeetLocationMap';
 // import AwsSliderStyles from 'react-awesome-slider/src/styles';
 
 const styles = (theme) => ({
@@ -16,6 +18,7 @@ const styles = (theme) => ({
         display: "grid",
         gridTemplateColumns: "minmax(10px,1fr) minmax(min-content,1100px) minmax(10px,1fr)",
         gridTemplateRows: "minmax(10px,1fr) minmax(400px,min-content) minmax(10px,1fr)",
+        paddingLeft: "70px"
     },
     container: {
         gridArea: "2/2",
@@ -33,10 +36,9 @@ const styles = (theme) => ({
     },
     cardContainer: {
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))",
+        gridTemplateColumns: "1fr 350px 1fr",
     },
     card: {
-        // height: "300px",
         '&>div>h1': {
             textAlign: "center"
         }
@@ -60,38 +62,146 @@ const styles = (theme) => ({
 })
 
 class MeetingDashboard extends Component {
+
+    state = {
+        simUsers: [],
+        mapOpen: false,
+    }
+
+    componentDidMount = async () => {
+        console.log("Mounted")
+        // await this.props.getUsers();
+        // this.userSimInit();
+    }
+
+
+    getDistance = (location1, location2) => {
+        const R = 6371e3; // metres
+        const φ1 = location1.latitude * Math.PI / 180; // φ, λ in radians
+        const φ2 = location2.latitude * Math.PI / 180;
+        const Δφ = (location2.latitude - location1.latitude) * Math.PI / 180;
+        const Δλ = (location2.longitude - location2.longitude) * Math.PI / 180;
+
+        const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+            Math.cos(φ1) * Math.cos(φ2) *
+            Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        const d = R * c; // in metres
+        return Math.abs(d / 1000) //in km
+    }
+
+    componentDidUpdate = (prevProps, preState) => {
+        // if (preState.simUsers !== this.props.similarUsers || prevProps.user !== this.props.user) {
+        //     // this.props.getUsers();
+        //     this.setState({
+        //         simUsers: this.props.similarUsers
+        //     })
+        // }
+        if (prevProps !== this.props)
+            this.userSimInit();
+    }
+
+    userSimInit = async () => {
+        const uid = this.props.user.uid;
+        let query = await firebase.firestore().collection("users").doc(uid).get();
+        let data = query.data();
+        let { beverages, duration, location } = data;
+        let arr = [];
+        query = await firebase.firestore().collection("users").get();
+        query.forEach(async (doc) => {
+            let user = doc.data();
+            user.images = [];
+
+            var storageRef = firebase.storage().ref(`Images/${doc.id}`);
+            await storageRef.listAll().then(function (result) {
+                result.items.forEach(async function (imageRef) {
+                    await imageRef.getDownloadURL().then(function (url) {
+                        user.images.push(url)
+                    }).catch(function (error) {
+                        console.log(error)
+                    });
+                });
+            }).catch(function (error) {
+                console.log(error)
+            });
+            if (!user || !beverages || !duration)
+                return
+            console.log(user);
+            let bevF = beverages.some(r => user.beverages.includes(r));
+            let duF = duration.some(r => user.duration.includes(r));
+            if (this.getDistance(user.location, location) <= 5 && bevF && duF) {
+                arr.push(user);
+            }
+        })
+        this.setState({
+            simUsers: arr
+        })
+    }
+
+    removeUser = (uid) => {
+        this.setState({
+            simUsers: this.state.simUsers.filter(item => item.uid !== uid)
+        })
+    }
+
+    showPopup = async (uid, name) => {
+        let ans = await swal.fire({
+            title: "Are you sure?",
+            text: `You want to meet ${name}?`,
+            icon: "warning",
+            showConfirmButton: true,
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+        })
+        console.log(ans.value);
+        if (ans.value) {
+            this.setState({
+                mapOpen: !this.state.mapOpen
+            })
+        }
+    }
+
     render() {
         const { classes } = this.props;
+        console.log(this.state.simUsers);
         return (
-            <div className={`bg ${classes.wrapper}`}>
+            <div className={`bg ${classes.wrapper}`} >
                 <div className={classes.container}>
                     <h1 className={classes.mainHeading}>Meeting Dashboard</h1>
                     <h3 className={classes.para}>Select User from the given list of users to meet.</h3>
                     <div className={classes.cardContainer}>
-                        {this.props.similarUsers.map(user => (
-                            <Card key={uuid()}>
-                                <CardContent className={classes.card}>
-                                    {console.log(user.images)}
-                                    <AwesomeSlider bullets={false}>
-                                        {user.images.map(img=>(<div data-src={img}/>))}
-                                    </AwesomeSlider>
-                                    <div className={classes.cardOptions}>
-                                        <CheckCircleIcon className={classes.tick} /><h1>{user.nickname}</h1><CancelIcon className={classes.cross} />
-                                    </div>
-                                </CardContent>
-                            </Card>
-                        ))}
-                        <Button onClick={()=>this.setState({a:1})}>rerender</Button>
+                        {this.state.simUsers[0] && <Card style={{ gridArea: "1/2" }} key={uuid()}>
+                            <CardContent className={classes.card}>
+                                <AwesomeSlider bullets={false}>
+                                    {this.state.simUsers[0].images.map(img => (<div data-src={img} />))}
+                                </AwesomeSlider>
+                                <div className={classes.cardOptions}>
+                                    <CheckCircleIcon className={classes.tick} onClick={() => this.showPopup(this.state.simUsers[0].uid, this.state.simUsers[0].nickname)} /><h1>{this.state.simUsers[0].nickname}</h1><CancelIcon className={classes.cross} onClick={() => this.removeUser(this.state.simUsers[0].uid)} />
+                                </div>
+                            </CardContent>
+                        </Card>}
                     </div>
+                    <Button onClick={() => this.setState({ a: 1 })}>rerender</Button>
+                    <Modal
+                        style={{ width: "300px", height: "300px" }}
+                        open={this.state.mapOpen}
+                        onClose={() => this.setState({ mapOpen: false })}
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                    >
+                        <div className="flex" style={{ width: "100vw", height: "100vh" }}>
+                            <div style={{ width: "400px", height: "400px" }}>
+                                <MeetLocationMap />
+                            </div>
+                        </div>
+
+
+                    </Modal>
                 </div>
             </div>
         );
-    }
-
-    componentDidUpdate = (preProp) => {
-        if (preProp.user !== this.props.user) {
-            this.props.getUsers();
-        }
     }
 }
 

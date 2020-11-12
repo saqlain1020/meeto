@@ -61,3 +61,7 @@ font-family: 'Roboto Slab', serif; */
 .similarUserCard>div>h1{
 text-align: center;
 }
+
+.MuiButton-containedPrimary{
+  background: #574b90 !important;
+}

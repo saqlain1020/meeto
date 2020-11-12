@@ -24,41 +24,45 @@ var getDistance=(location1,location2)=>{
 
 
 export var getUsers = () => async (dipatch) => {
-    let { beverages, duration, location } = store.getState().user;
-    let arr = [];
-    let query = await firebase.firestore().collection("users").get();
-    query.forEach(doc => {
-        let user = doc.data();
-        user.images = [];
+    // const uid = "P16u9mdPQNh4ZSScrjxAvU8XYjw1"
+    // let query = await firebase.firestore().collection("users").doc(uid).get();
+    // let data = query.data();
+    // let { beverages, duration, location } = data;
+    // let arr = [];
+    // query = await firebase.firestore().collection("users").get();
+    // query.forEach(async(doc) => {
+    //     let user = doc.data();
+    //     user.images = [];
 
-        var storageRef = firebase.storage().ref(`Images/${doc.id}`);
-        storageRef.listAll().then(function(result) {
-          result.items.forEach(function(imageRef) {
-            imageRef.getDownloadURL().then(function(url) {
-                user.images.push(url)
-              }).catch(function(error) {
-                console.log(error)
-              });
-          });
-        }).catch(function(error) {
-            console.log(error)
-        });
-
-        console.log(user);
-        let bevF = beverages.some(r=> user.beverages.includes(r));
-        let duF = duration.some(r=> user.duration.includes(r));
-        // console.log(getDistance(user.location, location))
-        // console.log(bevF)
-        // console.log(duF);
-        if (getDistance(user.location, location) <= 5 && bevF && duF) {
-            arr.push(user);
-        }
-    })
-    console.log(arr);
-    dipatch({
-        type: GETSIMUSER,
-        payload: {
-            users: arr
-        }
-    })
+    //     var storageRef = firebase.storage().ref(`Images/${doc.id}`);
+    //     await storageRef.listAll().then(function(result) {
+    //       result.items.forEach(async function(imageRef) {
+    //         await imageRef.getDownloadURL().then(function(url) {
+    //             user.images.push(url)
+    //           }).catch(function(error) {
+    //             console.log(error)
+    //           });
+    //       });
+    //     }).catch(function(error) {
+    //         console.log(error)
+    //     });
+    //     if(!user || !beverages || !duration)
+    //         return
+    //     console.log(user);
+    //     let bevF = beverages.some(r=> user.beverages.includes(r));
+    //     let duF = duration.some(r=> user.duration.includes(r));
+    //     // console.log(getDistance(user.location, location))
+    //     // console.log(bevF)
+    //     // console.log(duF);
+    //     if (getDistance(user.location, location) <= 5 && bevF && duF) {
+    //         arr.push(user);
+    //     }
+    // })
+    // console.log(arr);
+    // dipatch({
+    //     type: GETSIMUSER,
+    //     payload: {
+    //         users: arr
+    //     }
+    // })
 }

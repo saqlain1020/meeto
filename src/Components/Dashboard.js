@@ -1,4 +1,4 @@
-import { Button, withStyles } from '@material-ui/core';
+import { Button, Drawer, withStyles } from '@material-ui/core';
 import React from 'react';
 import ProfileStepper from './ProfileStepper'
 import firebase from '../Util/Firebase'

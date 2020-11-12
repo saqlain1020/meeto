@@ -129,9 +129,9 @@ export var saveProfile = (obj) => async (dispatch) => {
 
 export var uploadImages = (files) => async (dispatch) => {
     let ref = firebase.storage().ref().child(`Images/${store.getState().user.uid}/`);
-    files.forEach(img=>{
-        ref.child(img.name).put(img).then(function(snapshot) {
-            console.log('Uploaded a Image');
+    files.forEach(async(img)=>{
+        await ref.child(img.name).put(img).then(function(snapshot) {
+            console.log(snapshot);
           });
     })
 }
