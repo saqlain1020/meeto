@@ -112,9 +112,7 @@ class Dashboard extends React.Component {
                 <Grid key={uuid()} container className={classes.row} alignItems="center">
                   <Grid item xs={2}>
                       {user.images.forEach(item=>console.log(item))}
-                      {/* {setTimeout(console.log())} */}
-                      {/* {console.log(user.images[0])} */}
-                    {/* <Avatar src={`${user.images}`} /> */}
+                    <Avatar src={`${user.images[0]}`} />
                   </Grid>
                   <Grid item xs={3}>
                     <Typography>{user.userName}</Typography>
@@ -148,6 +146,7 @@ class Dashboard extends React.Component {
               ))}
             </div>
           )}
+        
         </div>
       </div>
     );

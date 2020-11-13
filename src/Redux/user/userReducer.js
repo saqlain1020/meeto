@@ -1,4 +1,4 @@
-import { INITPROFILE, LOGINWITHFACEBOOK, SETLOCATION, SETUSER, SIGNINEMAILPASS, SIGNOUT, SIGNUP } from "./userConstants";
+import { INITPROFILE, LOGINWITHFACEBOOK, SETLOCATION, SETUSER, SIGNINEMAILPASS, SIGNOUT, SIGNUP,ADDIMAGES } from "./userConstants";
 import firebase from "../../Util/Firebase"
 
 var initialState = {};
@@ -21,6 +21,8 @@ var userReducer = (state = initialState, action) => {
             return user;
         case INITPROFILE:
             return {...state,...payload.obj}
+        case ADDIMAGES:
+                return {...state,images:payload.images}
         default:
             return state;
     }

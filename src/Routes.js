@@ -8,8 +8,8 @@ import MeetingDashboard from './Components/MeetingDashboard';
 var Routes = () => {
     return <Switch>
         <Route path="/Login" component={Login} />
-        <Route path="/Dashboard" render={(props)=>( <div><Drawer/><Dashboard {...props}/></div>)} />
-        <Route path="/MeetingDashboard" render={(props)=>( <div><Drawer/><MeetingDashboard {...props}/></div>)} />
+        <Route path="/Dashboard" render={(props)=>( <div><Drawer><Dashboard {...props}/></Drawer></div>)} />
+        <Route path="/MeetingDashboard" render={(props)=>( <div><Drawer><MeetingDashboard {...props}/></Drawer></div>)} />
     </Switch>
 }
 

@@ -25,7 +25,7 @@ const styles = (theme) => ({
       "minmax(10px,1fr) minmax(min-content,1100px) minmax(10px,1fr)",
     gridTemplateRows:
       "minmax(10px,1fr) minmax(400px,min-content) minmax(10px,1fr)",
-    paddingLeft: "70px",
+    // paddingLeft: "70px",
   },
   container: {
     gridArea: "2/2",

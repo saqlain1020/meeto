@@ -1,5 +1,5 @@
 import firebase from '../../Util/Firebase'
-import { INITPROFILE, LOGINWITHFACEBOOK, SETLOCATION, SETUSER, SIGNINEMAILPASS, SIGNOUT, SIGNUP } from "./userConstants"
+import { INITPROFILE, LOGINWITHFACEBOOK, SETLOCATION, SETUSER, SIGNINEMAILPASS, SIGNOUT, SIGNUP ,ADDIMAGES} from "./userConstants"
 import swal from "sweetalert";
 import store from '../store'
 import { setAlert } from './../alert/alertActions';
@@ -25,7 +25,7 @@ export var signInWithEmailPassword = (email, password) => async (dispatch) => {
             }
         })
     } catch (error) {
-        console.log(error);
+        swal(error.message,"","error")
     }
 
 }
@@ -130,9 +130,34 @@ export var saveProfile = (obj) => async (dispatch) => {
 
 export var uploadImages = (files) => async (dispatch) => {
     let ref = firebase.storage().ref().child(`Images/${store.getState().user.uid}/`);
-    files.forEach(async(img)=>{
+    await files.forEach(async(img)=>{
         await ref.child(img.name).put(img).then(function(snapshot) {
+            console.log("image");
             console.log(snapshot);
           });
     })
+    // let user = store.getState().user;
+    let images = [];
+        let result = await ref.listAll()
+        result.items.forEach(async function(imageRef) {
+            let url = await imageRef.getDownloadURL()
+              images.push(url)
+          });
+       
+        
+        dispatch({
+            type: ADDIMAGES,
+            payload:{
+                images,
+            }
+        })
+
+        let inv = setInterval(()=>{
+            if(images.length > 0){
+                firebase.firestore().collection("users").doc(store.getState().user.uid).update({images,});
+                clearInterval(inv);
+            }
+        },300)
+        
+
 }
