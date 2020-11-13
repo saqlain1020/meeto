@@ -71,7 +71,7 @@ class MeetingDashboard extends Component {
     componentDidMount = async () => {
         console.log("Mounted")
         // await this.props.getUsers();
-        // this.userSimInit();
+        this.userSimInit();
     }
 
 
@@ -185,18 +185,21 @@ class MeetingDashboard extends Component {
                     </div>
                     <Button onClick={() => this.setState({ a: 1 })}>rerender</Button>
                     <Modal
-                        style={{ width: "300px", height: "300px" }}
+                        // style={{ width: "300px", height: "300px" }}
                         open={this.state.mapOpen}
                         onClose={() => this.setState({ mapOpen: false })}
                         aria-labelledby="simple-modal-title"
                         aria-describedby="simple-modal-description"
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }}
                     >
-                        <div className="flex" style={{ width: "100vw", height: "100vh" }}>
-                            <div style={{ width: "400px", height: "400px" }}>
-                                <MeetLocationMap />
-                            </div>
-                        </div>
 
+                        <div style={{ width: "400px", height: "400px" }}>
+                            <MeetLocationMap />
+                        </div>
 
                     </Modal>
                 </div>

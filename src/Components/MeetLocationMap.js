@@ -4,14 +4,14 @@ import RoomIcon from '@material-ui/icons/Room';
 import { geolocated } from 'react-geolocated';
 import { connect } from 'react-redux';
 import { setLocation } from '../Redux/user/userActions'
-import {v4 as uuid} from 'uuid';
+import { v4 as uuid } from 'uuid';
 import { Button, Card, CardContent, Grid, Input, Typography } from '@material-ui/core';
 import {
     MuiPickersUtilsProvider,
     KeyboardTimePicker,
     KeyboardDatePicker,
-  } from '@material-ui/pickers';
-  import DateFnsUtils from '@date-io/date-fns';
+} from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 var foursquare = require('react-foursquare')({
     clientID: 'CLC2AOG5D0D2BE42BKXUOI1B4GO0311EAN2SBN5Z123R1WKN',
     clientSecret: '0THSH3Q3GICA14DTKSMSJ4YYGDAUY5NKSIWTJABTX543MOAW'
@@ -26,7 +26,7 @@ class SimpleMap extends React.Component {
         lng: 41,
         venues: [],
         place: "",
-        picker:"",
+        picker: "",
     };
     componentDidUpdate = (preProp) => {
         if (preProp !== this.props) {
@@ -74,27 +74,40 @@ class SimpleMap extends React.Component {
     //         zoom: zoom,
     //     });
     // }
-    selectPlace=(place)=>{
+    selectPlace = (place) => {
         console.log(place);
         this.setState({
-        place:  <Card style={{width:"400px",height:"60px",fontSize:"20px"}}><CardContent style={{display:"flex",justifyContent:"space-between"}}> <Typography>{place.name}</Typography> <Button variant="contained" color="primary" onClick={()=>this.onNext()}>Next</Button><Button variant="contained" color="primary" onClick={()=>this.openDirection(place.location)}>Get DIrection</Button></CardContent></Card>
+            place: <Card style={{ width: "400px", height: "60px", fontSize: "20px" }}><CardContent>
+                <Grid container>
+                    <Grid item xs={6}>
+                        <Typography>{place.name}</Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                        <Button variant="contained" size="small" color="primary" onClick={() => this.onNext()}>Next</Button>
+                    </Grid>
+                    <Grid item xs={3}>
+                        <Button variant="contained" size="small" color="primary" onClick={() => this.openDirection(place.location)}>Direction</Button>
+                    </Grid>
+                </Grid>
+            </CardContent></Card>
         })
     }
-    onNext=()=>{
-        let obj = <Grid style={{width:"400px",background:"white",fontSize:"20px"}}>>
-            <Input type="date"></Input>
-            <Input type="time"></Input>
-     </Grid>
-      this.setState({
-          picker: obj
-      })
+    onNext = () => {
+        let obj = <Grid container style={{ background: "white", fontSize: "20px" }}>
+            <Grid item xs={6}>
+                <Input style={{width:"100%",padding:"12px"}} type="date"></Input></Grid>
+            <Grid item xs={6}><Input style={{width:"100%",padding:"12px"}} type="time"></Input></Grid>
+        </Grid>
+        this.setState({
+            picker: obj
+        })
     }
-    openDirection = (loc)=>{
+    openDirection = (loc) => {
         window.open(`https://www.google.com/maps/dir/${loc.lat},${loc.lng}`, '_blank')
     }
     render() {
         console.log(this.props)
-        return (<div style={{width:"400px",height:"300px"}}>
+        return (<div style={{ width: "400px", height: "300px" }}>
             <GoogleMapReact draggable={this.state.draggable}
                 onChange={this._onChange}
                 center={this.state.center}
@@ -114,19 +127,19 @@ class SimpleMap extends React.Component {
                         lat={item.location.lat}
                         lng={item.location.lng}
                         style={{ color: "red" }}
-                        onClick={()=>this.selectPlace(item)}
+                        onClick={() => this.selectPlace(item)}
                     ></RoomIcon>
                 ))}
             </GoogleMapReact >
             {this.state.place}
             {this.state.picker}
-            </div>
+        </div>
         );
     }
 }
 
 var actions = {
-    
+
 }
 
 export default connect(null, actions)(geolocated()(SimpleMap));

@@ -19,7 +19,7 @@ class App extends React.Component {
         if (data) {
           this.props.setUser(data);
         }
-        // this.props.history.push("/Dashboard");
+        this.props.history.push("/Dashboard");
       } else {
         this.props.history.push("/Login");
       }
