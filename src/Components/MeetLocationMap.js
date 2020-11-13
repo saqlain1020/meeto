@@ -37,28 +37,32 @@ class SimpleMap extends React.Component {
     venues: [],
     place: "",
     picker: "",
-    date: null,
-    time: null,
+    date: "",
+    time: "",
   };
   componentDidUpdate = (preProp) => {
-    if (preProp !== this.props) {
-      this.setState(
-        {
-          lat: this.props.coords.latitude,
-          lng: this.props.coords.longitude,
-          center: [this.props.coords.latitude, this.props.coords.longitude],
-        },
-        () => {
-          let params = { ll: `${this.state.lat},${this.state.lng}` };
-          console.log(params);
-          foursquare.venues.getVenues(params).then((res) => {
-            this.setState({
-              venues: res.response.venues,
+    try {
+      if (preProp !== this.props) {
+        this.setState(
+          {
+            lat: this.props.coords.latitude,
+            lng: this.props.coords.longitude,
+            center: [this.props.coords.latitude, this.props.coords.longitude],
+          },
+          () => {
+            let params = { ll: `${this.state.lat},${this.state.lng}` };
+            console.log(params);
+            foursquare.venues.getVenues(params).then((res) => {
+              this.setState({
+                venues: res.response.venues,
+              });
+              console.log(res.response.venues);
             });
-            console.log(res.response.venues);
-          });
-        }
-      );
+          }
+        );
+      }
+    } catch (error) {
+      this.props.setAlert("Location Error", "error");
     }
   };
   onchange = (e) => {
