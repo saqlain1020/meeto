@@ -88,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function MiniDrawer(props){
+function MiniDrawer(props){
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -196,7 +196,7 @@ export default function MiniDrawer(props){
     );
 }
 
-// var actions = {
-//     signOut,
-// }
-// export default connect(null, actions)(MiniDrawer)
+var actions = {
+    signOut,
+}
+export default connect(null, actions)(MiniDrawer)

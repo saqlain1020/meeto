@@ -1,5 +1,5 @@
 import store from '../store';
-import { GETSIMUSER } from './similarUsersConstants';
+import { GETSIMUSER, SETUSERS } from './similarUsersConstants';
 import firebase from '../../Util/Firebase'
 
 
@@ -65,4 +65,13 @@ export var getUsers = () => async (dipatch) => {
     //         users: arr
     //     }
     // })
+}
+
+export var setUsers = (users)=>{
+    return {
+        type: SETUSERS,
+        payload:{
+            users,
+        }
+    }
 }

@@ -1,7 +1,7 @@
 import { Button, Card, CardContent, Modal, withStyles } from '@material-ui/core';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getUsers } from '../Redux/similarUsers/similarUsersActions'
+import { getUsers,setUsers } from '../Redux/similarUsers/similarUsersActions'
 import firebase from '../Util/Firebase'
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
@@ -10,7 +10,6 @@ import swal from 'sweetalert2';
 import { v4 as uuid } from 'uuid'
 import 'react-awesome-slider/dist/styles.css';
 import MeetLocationMap from './MeetLocationMap';
-// import AwsSliderStyles from 'react-awesome-slider/src/styles';
 
 const styles = (theme) => ({
     wrapper: {
@@ -66,6 +65,7 @@ class MeetingDashboard extends Component {
     state = {
         simUsers: [],
         mapOpen: false,
+        userSelected: "",
     }
 
     componentDidMount = async () => {
@@ -98,8 +98,8 @@ class MeetingDashboard extends Component {
         //         simUsers: this.props.similarUsers
         //     })
         // }
-        if (prevProps !== this.props)
-            this.userSimInit();
+        // if (prevProps !== this.props)
+        //     this.userSimInit();
     }
 
     userSimInit = async () => {
@@ -127,15 +127,17 @@ class MeetingDashboard extends Component {
             });
             if (!user || !beverages || !duration)
                 return
-            console.log(user);
             let bevF = beverages.some(r => user.beverages.includes(r));
             let duF = duration.some(r => user.duration.includes(r));
-            if (this.getDistance(user.location, location) <= 5 && bevF && duF) {
+            console.log(user)
+            if (this.getDistance(user.location, location) <= 5 && bevF && duF && user.uid !== this.props.user.uid) {
                 arr.push(user);
             }
         })
         this.setState({
             simUsers: arr
+        },()=>{
+            this.props.setUsers(arr);
         })
     }
 
@@ -158,7 +160,8 @@ class MeetingDashboard extends Component {
         console.log(ans.value);
         if (ans.value) {
             this.setState({
-                mapOpen: !this.state.mapOpen
+                mapOpen: !this.state.mapOpen,
+                userSelected: this.state.simUsers[0].uid,
             })
         }
     }
@@ -198,7 +201,7 @@ class MeetingDashboard extends Component {
                     >
 
                         <div style={{ width: "400px", height: "400px" }}>
-                            <MeetLocationMap />
+                            <MeetLocationMap userName={this.state.user.nickname} userSelected={this.state.userSelected} />
                         </div>
 
                     </Modal>
@@ -215,6 +218,7 @@ var mapState = (state) => ({
 
 var actions = {
     getUsers,
+    setUsers,
 }
 
 export default connect(mapState, actions)(withStyles(styles)(MeetingDashboard));

@@ -1,1 +1,2 @@
 export var GETSIMUSER = "GET_SIMILAR_USERS";
+export var SETUSERS = "SET_USERS";
