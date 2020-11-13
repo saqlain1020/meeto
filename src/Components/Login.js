@@ -1,14 +1,12 @@
-import { Button, Container, Grid, makeStyles, TextField, withStyles } from '@material-ui/core';
+import { Button, Container, Grid, withStyles } from '@material-ui/core';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import React from 'react';
 import bg from "../Images/Login-bg.jpg"
-import firebase from "../Util/Firebase"
-import swal from "@sweetalert/with-react";
-import MuiAlert from '@material-ui/lab/Alert';
 import { connect } from 'react-redux';
 import {signInWithEmailPassword, loginwithfacebook,signUpWithEmailPassword} from '../Redux/user/userActions'
 import { setAlert } from './../Redux/alert/alertActions';
+import LockIcon from '@material-ui/icons/Lock';
 
 const styles = (theme) => ({
     wrapper: {
@@ -124,7 +122,7 @@ class Login extends React.Component {
                         </Grid>
                         <Grid className={classes.textField} container spacing={1} alignItems="flex-end">
                             <Grid item>
-                                <MailOutlineIcon />
+                                <LockIcon/>
                             </Grid>
                             <Grid item>
                                 <input name="password" type="password" onChange={this.onchange} value={this.state.password} className={classes.input} placeholder="password" /><br></br>
