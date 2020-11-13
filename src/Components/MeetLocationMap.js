@@ -94,7 +94,6 @@ class SimpleMap extends React.Component {
   //     });
   // }
   selectPlace = (place) => {
-    console.log(place);
     this.setState({
       lat: place.location.lat,
       lng: place.location.lng,
@@ -149,7 +148,7 @@ class SimpleMap extends React.Component {
         latitude: lat,
         longitude: lng,
       },
-      userName: this.props.userName,
+      userName: this.props.user.nickname,
     };
     try {
       await firebase.firestore().collection("requests").add(obj);

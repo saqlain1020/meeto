@@ -19,7 +19,8 @@ class App extends React.Component {
         if (data) {
           this.props.setUser(data);
         }
-        this.props.history.push("/Dashboard");
+        if(this.props.history.location.pathname === "/Login")
+          this.props.history.push("/Dashboard");
       } else {
         this.props.history.push("/Login");
       }
