@@ -6,8 +6,7 @@ var similarUsersReducer = (state = initialState, action) => {
     var { type, payload } = action;
     switch (type) {
         case GETSIMUSER:
-            console.log(payload.users)
-            return payload.users;
+            return [...state,payload.user];
         case SETUSERS:
             return payload.users;
         default:

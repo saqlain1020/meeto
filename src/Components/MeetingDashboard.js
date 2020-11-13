@@ -16,6 +16,7 @@ import swal from "sweetalert2";
 import { v4 as uuid } from "uuid";
 import "react-awesome-slider/dist/styles.css";
 import MeetLocationMap from "./MeetLocationMap";
+import { clearRequest } from "./../Redux/requests/requestsActions";
 
 const styles = (theme) => ({
   wrapper: {
@@ -76,7 +77,7 @@ class MeetingDashboard extends Component {
   };
 
   componentDidMount = async () => {
-    console.log("Mounted");
+    this.props.clearRequest();
     this.props.getUsers();
   };
 
@@ -85,15 +86,14 @@ class MeetingDashboard extends Component {
       this.setState({
         simUsers: this.props.similarUsers,
       });
-      if(preState.simUsers !== this.state.simUsers){
-          console.log("chnge state");
-          setTimeout(()=>{
-            this.setState({
-                b: 1,
-            })
-          },1000)
-          
-      }
+    if (preState.simUsers !== this.state.simUsers) {
+      console.log("chnge state");
+      setTimeout(() => {
+        this.setState({
+          b: 1,
+        });
+      }, 1000);
+    }
   };
 
   removeUser = (uid) => {
@@ -132,8 +132,7 @@ class MeetingDashboard extends Component {
             Select User from the given list of users to meet.
           </h3>
           <div className={classes.cardContainer}>
-
-            {this.state.simUsers && this.state.simUsers[0] &&
+            {this.state.simUsers && this.state.simUsers[0] && (
               <Card style={{ gridArea: "1/2" }} key={uuid()}>
                 <CardContent className={classes.card}>
                   <AwesomeSlider bullets={false}>
@@ -161,7 +160,7 @@ class MeetingDashboard extends Component {
                   </div>
                 </CardContent>
               </Card>
-            }
+            )}
           </div>
           <Modal
             // style={{ width: "300px", height: "300px" }}
@@ -193,6 +192,7 @@ var mapState = (state) => ({
 var actions = {
   getUsers,
   setUsers,
+  clearRequest,
 };
 
 export default connect(mapState, actions)(withStyles(styles)(MeetingDashboard));

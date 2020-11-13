@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    background: "#1e272e"
   },
   appBarShift: {
     marginLeft: drawerWidth,
@@ -62,6 +63,7 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    background: "inherit",
   },
   drawerClose: {
     transition: theme.transitions.create("width", {
@@ -73,6 +75,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       width: theme.spacing(9) + 1,
     },
+    background: "inherit",
   },
   toolbar: {
     display: "flex",
@@ -89,6 +92,18 @@ const useStyles = makeStyles((theme) => ({
   menuItem: {
     // background: "red",
   },
+  list:{
+    // background: "red"
+  },
+  icon:{
+    color: "white"
+  },
+  drw:{
+      background: "#222"
+  },
+  text:{
+      color:"white"
+  }
 }));
 
 function MiniDrawer(props) {
@@ -121,7 +136,7 @@ function MiniDrawer(props) {
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
-        style={{ background: "#303952" }}
+        // style={{ background: "#0c2461" }}
       >
         <Toolbar>
           <IconButton
@@ -178,11 +193,12 @@ function MiniDrawer(props) {
         </Toolbar>
       </AppBar>
       <Drawer
+      
         variant="permanent"
         className={clsx(classes.drawer, {
           [classes.drawerOpen]: open,
           [classes.drawerClose]: !open,
-        })}
+        },classes.drw)}
         classes={{
           paper: clsx({
             [classes.drawerOpen]: open,
@@ -191,7 +207,7 @@ function MiniDrawer(props) {
         }}
       >
         <div className={classes.toolbar}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton className={classes.text} onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
             ) : (
@@ -200,43 +216,43 @@ function MiniDrawer(props) {
           </IconButton>
         </div>
         <Divider />
-        <List>
+        <List className={classes.list}>
         <ListItem onClick={()=>props.history.push("Dashboard")} button key="Dashboard">
                 <ListItemIcon>
-                <DashboardIcon/>
+                <DashboardIcon className={classes.icon}/>
                 </ListItemIcon>
-                <ListItemText primary="Dashboard" />
+                <ListItemText className={classes.text} primary="Dashboard" />
             </ListItem>
             <ListItem onClick={()=>props.history.push("MeetingDashboard")} button key="Meet Someone">
                 <ListItemIcon>
-                <FaceIcon/>
+                <FaceIcon className={classes.icon}/>
                 </ListItemIcon>
-                <ListItemText primary="Meet Someone" />
+                <ListItemText className={classes.text} primary="Meet Someone" />
             </ListItem>
           {["Inbox", "Starred"].map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {index % 2 === 0 ? <InboxIcon className={classes.icon} /> : <MailIcon className={classes.icon} />}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText className={classes.text} primary={text} />
             </ListItem>
           ))}
         </List>
         <Divider />
-        <List>
+        <List className={classes.list}>
           {["All mail", "Trash"].map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {index % 2 === 0 ? <InboxIcon className={classes.icon}/> : <MailIcon className={classes.icon}/>}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText className={classes.text} primary={text} />
             </ListItem>
           ))}
           <ListItem onClick={props.signOut} button key="Sign Out">
                 <ListItemIcon>
-                <ExitToAppIcon/>
+                <ExitToAppIcon className={classes.icon}/>
                 </ListItemIcon>
-                <ListItemText primary="Sign Out" />
+                <ListItemText className={classes.text} primary="Sign Out" />
             </ListItem>
           
         </List>

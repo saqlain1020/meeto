@@ -40,7 +40,6 @@ export var getUsers = () => async (dipatch) => {
     await userExists();
     let user = store.getState().user;
     let { beverages, duration, location } = user;
-    var arr = [];
     let query = await firebase.firestore().collection("users").get();
     query.forEach(async(doc) => {
         let user = doc.data();
@@ -50,7 +49,7 @@ export var getUsers = () => async (dipatch) => {
         await storageRef.listAll().then(function(result) {
           result.items.forEach(async function(imageRef) {
             await imageRef.getDownloadURL().then(function(url) {
-                user.images.push(url)
+                user.images = [...user.images,url];
               }).catch(function(error) {
                 console.log(error)
               });
@@ -64,15 +63,15 @@ export var getUsers = () => async (dipatch) => {
         let bevF = beverages.some(r=> user.beverages.includes(r));
         let duF = duration.some(r=> user.duration.includes(r));
         if (getDistance(user.location, location) <= 5 && bevF && duF) {
-            arr.push(user);
+            dipatch({
+                type: GETSIMUSER,
+                payload: {
+                    user,
+                }
+            })
         }
     })
-    dipatch({
-        type: GETSIMUSER,
-        payload: {
-            users: arr
-        }
-    })
+    
 }
 
 export var setUsers = (users)=>{

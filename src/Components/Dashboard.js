@@ -19,8 +19,8 @@ import { getRequests } from "../Redux/requests/requestsActions";
 var styles = (theme) => ({
   stepper: {
     width: "500px",
-    background: "white",
     padding: "20px",
+    background: "white",
     borderRadius: "10px",
   },
   wrapper: {
@@ -28,7 +28,6 @@ var styles = (theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    background: "#dfe6e9",
   },
   heading: {
     fontFamily: "'Roboto Slab', serif",
@@ -78,8 +77,8 @@ class Dashboard extends React.Component {
   render = () => {
     const { classes } = this.props;
     return (
-      <div className={classes.wrapper}>
-        <div className={classes.stepper}>
+      <div className={`${classes.wrapper} bg`}>
+        <div className={`${classes.stepper}`}>
           {!this.state.userInfoExists && <ProfileStepper />}
           {this.state.userInfoExists && this.props.requests.length <= 0 && (
             <div
@@ -108,12 +107,9 @@ class Dashboard extends React.Component {
               <Typography className={classes.heading} variant="h1">
                 All Meetings
               </Typography>
-            {console.log(this.props.requests)}
-            {console.log(this.props.requests.length)}
               {this.props.requests.map((user) => (
                 <Grid key={uuid()} container className={classes.row} alignItems="center">
                   <Grid item xs={2}>
-                      {user.images.forEach(item=>console.log(item))}
                     <Avatar src={`${user.images[0]}`} />
                   </Grid>
                   <Grid item xs={3}>
@@ -129,7 +125,7 @@ class Dashboard extends React.Component {
                     </Select>
                   </Grid>
                   <Grid item xs={2}>
-                    <Typography>{user.date}</Typography>
+                    <Typography variant="button">{user.date}</Typography>
                   </Grid>
                   <Grid item xs={2}>
                     <Button

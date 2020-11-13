@@ -9,7 +9,7 @@ font-family: 'Roboto Slab', serif; */
   box-sizing: border-box;
 }
 .bg{
-  background: #dfe6e9;
+  background: #dfe4ea;
 }
 .flex{
   display: flex;
@@ -63,5 +63,5 @@ text-align: center;
 }
 
 .MuiButton-containedPrimary{
-  background: #30dba5 !important;
+  background: #1e3799 !important;
 }
