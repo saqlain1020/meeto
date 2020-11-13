@@ -108,7 +108,8 @@ class Dashboard extends React.Component {
               <Typography className={classes.heading} variant="h1">
                 All Meetings
               </Typography>
-
+            {console.log(this.props.requests)}
+            {console.log(this.props.requests.length)}
               {this.props.requests.map((user) => (
                 <Grid key={uuid()} container className={classes.row} alignItems="center">
                   <Grid item xs={2}>

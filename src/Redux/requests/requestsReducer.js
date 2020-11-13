@@ -6,7 +6,7 @@ var requestsReducer = (state= initialState,action)=>{
     var {type,payload} = action;
     switch(type){
         case SETREQ:
-            return payload.requests;
+            return [...state,payload.obj];
         default:
             return state;
     }

@@ -38,7 +38,7 @@ export var getRequests = () => async (dispatch) => {
         dispatch({
             type: SETREQ,
             payload: {
-                requests,
+                obj,
             }
         })
 

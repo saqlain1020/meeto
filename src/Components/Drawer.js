@@ -19,7 +19,10 @@ import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 import { Avatar, Fab, Menu, MenuItem } from "@material-ui/core";
 import { connect } from "react-redux";
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { signOut } from "../Redux/user/userActions";
+import FaceIcon from '@material-ui/icons/Face';
 
 const drawerWidth = 240;
 
@@ -198,7 +201,19 @@ function MiniDrawer(props) {
         </div>
         <Divider />
         <List>
-          {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+        <ListItem onClick={()=>props.history.push("Dashboard")} button key="Dashboard">
+                <ListItemIcon>
+                <DashboardIcon/>
+                </ListItemIcon>
+                <ListItemText primary="Dashboard" />
+            </ListItem>
+            <ListItem onClick={()=>props.history.push("MeetingDashboard")} button key="Meet Someone">
+                <ListItemIcon>
+                <FaceIcon/>
+                </ListItemIcon>
+                <ListItemText primary="Meet Someone" />
+            </ListItem>
+          {["Inbox", "Starred"].map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
@@ -209,7 +224,7 @@ function MiniDrawer(props) {
         </List>
         <Divider />
         <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
+          {["All mail", "Trash"].map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
@@ -217,6 +232,13 @@ function MiniDrawer(props) {
               <ListItemText primary={text} />
             </ListItem>
           ))}
+          <ListItem onClick={props.signOut} button key="Sign Out">
+                <ListItemIcon>
+                <ExitToAppIcon/>
+                </ListItemIcon>
+                <ListItemText primary="Sign Out" />
+            </ListItem>
+          
         </List>
       </Drawer>
       <main style={{ width: "100%" }}>{props.children}</main>
