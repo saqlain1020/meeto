@@ -58,7 +58,8 @@ class Dashboard extends React.Component {
           user.duration &&
           user.nickname &&
           user.phoneNumber &&
-          user.images
+          user.images &&
+          user.location
         ) {
           this.setState({
             userInfoExists: true,

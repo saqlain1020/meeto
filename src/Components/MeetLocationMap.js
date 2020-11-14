@@ -68,6 +68,8 @@ class SimpleMap extends React.Component {
   onchange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
+    },()=>{
+      console.log(this.state)
     });
   };
   componentDidMount = () => {};
@@ -165,21 +167,21 @@ class SimpleMap extends React.Component {
   onNext = () => {
     let obj = (
       <Grid container style={{ background: "white", fontSize: "20px" }}>
-        <Grid item xs={5}>
+        <Grid item>
           <Input
             name="date"
             onChange={this.onchange}
-            value={this.state.date}
-            style={{ width: "100%", padding: "2px" }}
+            defaultValue={this.state.date}
+            style={{ width: "150px", padding: "2px" }}
             type="date"
           ></Input>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item>
           <Input
-            value={this.state.time}
+            defaultValue={this.state.time}
             onChange={this.onchange}
             name="time"
-            style={{ width: "100%", padding: "2px" }}
+            style={{ width: "110px", padding: "2px" }}
             type="time"
           ></Input>
         </Grid>

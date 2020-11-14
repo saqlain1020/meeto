@@ -19,6 +19,8 @@
                     lat: this.props.coords.latitude,
                     lng: this.props.coords.longitude,
                     center: [this.props.coords.latitude, this.props.coords.longitude],
+                },()=>{
+                    this.props.setLocation({latitude:this.state.lat,longitude:this.state.lng})
                 })
             }
         }
