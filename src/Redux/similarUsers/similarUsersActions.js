@@ -62,7 +62,7 @@ export var getUsers = () => async (dipatch) => {
         console.log(user);
         let bevF = beverages.some(r=> user.beverages.includes(r));
         let duF = duration.some(r=> user.duration.includes(r));
-        if (getDistance(user.location, location) <= 5 && bevF && duF) {
+        if (getDistance(user.location, location) <= 5 && bevF && duF && user.uid !== store.getState().user.uid) {
             dipatch({
                 type: GETSIMUSER,
                 payload: {

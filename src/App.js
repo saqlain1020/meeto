@@ -7,6 +7,7 @@ import { setUser } from './Redux/user/userActions'
 import { connect } from 'react-redux'
 import firebase from './Util/Firebase'
 import { setAlert } from './Redux/alert/alertActions';
+import { setReq } from './Redux/currentReq/currentReqActions';
 
 
 class App extends React.Component {
@@ -28,6 +29,19 @@ class App extends React.Component {
     window.onerror = (message, source, lineno, colno, error)=> {
       this.props.setAlert(message,"error");
     }
+
+    //Firebase listener
+    firebase.firestore().collection("requests").onSnapshot((snap)=>{
+      console.log("in listener");
+      snap.docChanges().forEach((change)=>{
+        if(change.type === "added"){
+          let req = change.doc.data();
+          if(req)
+            this.props.setReq(req);
+        }
+      })
+    })
+
   }
   render = () => {
     
@@ -43,6 +57,7 @@ class App extends React.Component {
 var actions = {
   setUser,
   setAlert,
+  setReq,
 }
 
 var mapState = (state)=>({
