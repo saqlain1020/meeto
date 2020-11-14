@@ -19,7 +19,7 @@ class App extends React.Component {
         if (data) {
           this.props.setUser(data);
         }
-        if(this.props.history.location.pathname === "/Login")
+        if(this.props.history.location.pathname === "/Login" || this.props.history.location.pathname === "/")
           this.props.history.push("/Dashboard");
       } else {
         this.props.history.push("/Login");
@@ -28,7 +28,6 @@ class App extends React.Component {
     window.onerror = (message, source, lineno, colno, error)=> {
       this.props.setAlert(message,"error");
     }
-    // this.props.setAlert("You have succesfull Logged","success");
   }
   render = () => {
     
