@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/meeto/static/css/main.91c1572f.chunk.css",
+    "main.js": "/meeto/static/js/main.6d222623.chunk.js",
+    "main.js.map": "/meeto/static/js/main.6d222623.chunk.js.map",
+    "runtime-main.js": "/meeto/static/js/runtime-main.6a2413ac.js",
+    "runtime-main.js.map": "/meeto/static/js/runtime-main.6a2413ac.js.map",
+    "static/css/2.34b29efe.chunk.css": "/meeto/static/css/2.34b29efe.chunk.css",
+    "static/js/2.718f62c2.chunk.js": "/meeto/static/js/2.718f62c2.chunk.js",
+    "static/js/2.718f62c2.chunk.js.map": "/meeto/static/js/2.718f62c2.chunk.js.map",
+    "index.html": "/meeto/index.html",
+    "static/css/2.34b29efe.chunk.css.map": "/meeto/static/css/2.34b29efe.chunk.css.map",
+    "static/css/main.91c1572f.chunk.css.map": "/meeto/static/css/main.91c1572f.chunk.css.map",
+    "static/js/2.718f62c2.chunk.js.LICENSE.txt": "/meeto/static/js/2.718f62c2.chunk.js.LICENSE.txt",
+    "static/media/Login-bg.f0bee7d3.jpg": "/meeto/static/media/Login-bg.f0bee7d3.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6a2413ac.js",
+    "static/css/2.34b29efe.chunk.css",
+    "static/js/2.718f62c2.chunk.js",
+    "static/css/main.91c1572f.chunk.css",
+    "static/js/main.6d222623.chunk.js"
+  ]
+}
