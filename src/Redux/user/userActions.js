@@ -130,34 +130,20 @@ export var saveProfile = (obj) => async (dispatch) => {
 
 export var uploadImages = (files) => async (dispatch) => {
     let ref = firebase.storage().ref().child(`Images/${store.getState().user.uid}/`);
-    await files.forEach(async(img)=>{
-        await ref.child(img.name).put(img).then(function(snapshot) {
-            console.log("image");
-            console.log(snapshot);
-          });
-    })
-    // let user = store.getState().user;
     let images = [];
-        let result = await ref.listAll()
-        result.items.forEach(async function(imageRef) {
-            let url = await imageRef.getDownloadURL()
-              images.push(url)
-          });
-       
-        
-        dispatch({
-            type: ADDIMAGES,
-            payload:{
-                images,
-            }
-        })
-
-        let inv = setInterval(()=>{
-            if(images.length > 0){
-                firebase.firestore().collection("users").doc(store.getState().user.uid).update({images,});
-                clearInterval(inv);
-            }
-        },300)
-        
-
+    for(let i=0;i<files.length;i++){
+        let img = files[i];
+        let snapshot = await ref.child(img.name).put(img);
+        let url = await snapshot.ref.getDownloadURL();
+        console.log(url);
+        images = [...images,url];
+    }
+    dispatch({
+        type: ADDIMAGES,
+        payload:{
+            images,
+        }
+    })
+    await firebase.firestore().collection("users").doc(store.getState().user.uid).update({images,});
+    swal("Upload Successfull","","success");
 }

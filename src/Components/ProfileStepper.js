@@ -14,6 +14,7 @@ import RoomIcon from '@material-ui/icons/Room';
 import Test from './Test';
 import { connect } from 'react-redux';
 import {saveProfile,uploadImages} from '../Redux/user/userActions'
+import { setAlert } from './../Redux/alert/alertActions';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -52,6 +53,7 @@ function HorizontalLabelPositionBelowStepper(props) {
         }
         props.saveProfile(obj);
         props.uploadImages(images);
+        props.setAlert("Uploading Info...","Info")
     }
 
     const handleNext = () => {
@@ -208,6 +210,7 @@ var mapState = (state) =>({
 var actions = {
     saveProfile,
     uploadImages,
+    setAlert,
 }
 
 export default connect(mapState,actions)(geolocated()(HorizontalLabelPositionBelowStepper));
