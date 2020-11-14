@@ -73,6 +73,19 @@ class Dashboard extends React.Component {
     }
   };
   componentDidMount = async () => {
+    let {user} = this.props;
+    if (
+      user.beverages &&
+      user.duration &&
+      user.nickname &&
+      user.phoneNumber &&
+      user.images &&
+      user.location
+    ) {
+      this.setState({
+        userInfoExists: true,
+      });
+    }
     this.props.getRequests();
   };
   render = () => {

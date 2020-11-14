@@ -17,12 +17,15 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
-import { Avatar, Fab, Menu, MenuItem } from "@material-ui/core";
+import { Avatar, Fab, Menu, MenuItem, Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { signOut } from "../Redux/user/userActions";
 import FaceIcon from '@material-ui/icons/Face';
+import SettingsIcon from '@material-ui/icons/Settings';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+
 
 const drawerWidth = 240;
 
@@ -175,10 +178,10 @@ function MiniDrawer(props) {
             style={{ top: "50px" }}
           >
             <MenuItem className={classes.menuItem} onClick={handleClose}>
-              {props.user.nickname}
+            <AccountCircleIcon/>&nbsp;{props.user.nickname}
             </MenuItem>
-            <MenuItem className={classes.menuItem} onClick={handleClose}>
-              Other Settings
+            <MenuItem className={classes.menuItem} onClick={()=>{props.history.push("Settings");handleClose();}}>
+              <SettingsIcon/>&nbsp;Settings
             </MenuItem>
             <MenuItem
               className={classes.menuItem}
@@ -187,7 +190,7 @@ function MiniDrawer(props) {
                 props.signOut();
               }}
             >
-              Logout
+              <ExitToAppIcon/>&nbsp;Logout
             </MenuItem>
           </Menu>
         </Toolbar>
@@ -240,7 +243,7 @@ function MiniDrawer(props) {
         </List>
         <Divider />
         <List className={classes.list}>
-          {["All mail", "Trash"].map((text, index) => (
+          {["All mail"].map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon className={classes.icon}/> : <MailIcon className={classes.icon}/>}
@@ -248,6 +251,12 @@ function MiniDrawer(props) {
               <ListItemText className={classes.text} primary={text} />
             </ListItem>
           ))}
+          <ListItem onClick={()=>props.history.push("Settings")} button key="Swttings">
+                <ListItemIcon>
+                <SettingsIcon className={classes.icon}/>
+                </ListItemIcon>
+                <ListItemText className={classes.text} primary="Settings" />
+            </ListItem>
           <ListItem onClick={props.signOut} button key="Sign Out">
                 <ListItemIcon>
                 <ExitToAppIcon className={classes.icon}/>

@@ -193,7 +193,6 @@ function HorizontalLabelPositionBelowStepper(props) {
               </Button>
                                 <Button variant="contained" color="primary" onClick={handleNext}>
                                     {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                                    {/* {activeStep === steps.length - 1 && saveData()} */}
                                 </Button>
                             </div>
                         </div>
