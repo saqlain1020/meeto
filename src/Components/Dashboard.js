@@ -40,7 +40,10 @@ var styles = (theme) => ({
     margin: "10px 0",
   },
   select:{
-    fontSize: "10px"
+    fontSize: "12px",
+  },
+  date:{
+    fontSize: "15px",
   },
 });
 
@@ -130,11 +133,11 @@ class Dashboard extends React.Component {
               </Typography>
               {this.props.requests.map((user) => (
                 <Grid key={uuid()} container className={classes.row} alignItems="center">
-                  <Grid item xs={2}>
+                  <Grid item xs={1}>
                     <Avatar src={`${user.images[0]}`} />
                   </Grid>
                   <Grid item xs={3}>
-                    <Typography>{user.userName}</Typography>
+                    <Typography align="center"><b>{user.userName}</b></Typography>
                   </Grid>
                   <Grid item xs={3}>
                     <Select variant="outlined" className={classes.select} onChange={(e)=>this.changeStatus(user.docId,e.target.value)} value={user.status}>
@@ -145,8 +148,8 @@ class Dashboard extends React.Component {
                       <MenuItem value="DONE">DONE</MenuItem>
                     </Select>
                   </Grid>
-                  <Grid item xs={2}>
-                    <Typography variant="button">{user.date}</Typography>
+                  <Grid item xs={3}>
+                    <Typography className={classes.date} align="center">{user.date}</Typography>
                   </Grid>
                   <Grid item xs={2}>
                     <Button
