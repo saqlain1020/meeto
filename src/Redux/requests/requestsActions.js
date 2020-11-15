@@ -23,6 +23,9 @@ export var clearRequest = () => ({
 
 export var getRequests = () => async (dispatch) => {
   //wait for store.user update
+  dispatch({
+    type: CLEAR,
+  })
   await userExists();
 
   let data = await firebase

@@ -7,10 +7,11 @@ export var setReq = (req) => {
   };
 };
 
-export var acceptReq = (id)=>{
-  firebase.firestore().collection("requests").doc(id).update({status:"ACCEPTED"}).then(swal("Request Accepted","","success"));
-  return {
+export var acceptReq = (id,getRequests)=>async (dispatch)=>{
+  await firebase.firestore().collection("requests").doc(id).update({status:"ACCEPTED"}).then(swal("Request Accepted","","success"));
+  getRequests();
+  dispatch( {
     type: "SET_REQ",
     payload: { req:null, }
-  };
+  })
 }

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { setReq ,acceptReq} from './../Redux/currentReq/currentReqActions';
 import { withStyles, Paper, Typography, Button } from '@material-ui/core';
 import { Avatar } from '@material-ui/core';
-
+import {getRequests} from './../Redux/requests/requestsActions';
 
 
 var styles = (theme)=>({
@@ -28,14 +28,6 @@ var styles = (theme)=>({
         animationIterationCount: "infinite",
         animationTimingFunction: "ease-in-out",
         animationDirection: "reverse",
-    //     animation-duration: 0s;
-    // animation-timing-function: ease;
-    // animation-delay: 0s;
-    // animation-iteration-count: 1;
-    // animation-direction: normal;
-    // animation-fill-mode: none;
-    // animation-play-state: running;
-    // animation-name: glow;
     },
     "@keyframes glow":{
         "0%":{
@@ -89,7 +81,7 @@ class Popup extends React.Component{
     }
     render = ()=>{
         if(this.props.req){
-            var {req:{id,userName,placeName,location:{latitude,longitude}},classes,setReq,acceptReq} = this.props;
+            var {req:{id,userName,placeName,location:{latitude,longitude}},classes,setReq,acceptReq,getRequests} = this.props;
             return(
                 <div className={`${classes.root} reqPopup flex`}>
                     <div className={classes.container}>
@@ -99,7 +91,7 @@ class Popup extends React.Component{
                         </div>
                         <Typography align="center" className={classes.name}>{userName}</Typography>
                         <Typography align="center" onClick={()=>this.getDirection(latitude,longitude)} className={classes.place}>{placeName}</Typography>
-                        <Typography align="center" ><Button variant="outlined" onClick={()=>setReq(null)} className={classes.button} color="secondary">Cancel</Button>&nbsp;&nbsp;<Button variant="outlined" onClick={()=>acceptReq(id)} className={classes.button} color="primary">Confirm</Button></Typography>
+                        <Typography align="center" ><Button variant="outlined" onClick={()=>setReq(null)} className={classes.button} color="secondary">Cancel</Button>&nbsp;&nbsp;<Button variant="outlined" onClick={()=>acceptReq(id,getRequests)} className={classes.button} color="primary">Confirm</Button></Typography>
                     </Paper>
                     </div>
                 </div>
@@ -115,6 +107,7 @@ var mapState = (state) =>({
 var actions = {
     setReq,
     acceptReq,
+    getRequests,
 }
 
 export default connect(mapState,actions)(withStyles(styles)(Popup));
