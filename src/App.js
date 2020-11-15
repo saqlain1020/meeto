@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import firebase from './Util/Firebase'
 import { setAlert } from './Redux/alert/alertActions';
 import { setReq } from './Redux/currentReq/currentReqActions';
+import Popup from './Components/Popup';
 
 
 class App extends React.Component {
@@ -36,19 +37,20 @@ class App extends React.Component {
       snap.docChanges().forEach((change)=>{
         if(change.type === "added"){
           let req = change.doc.data();
-          if(req)
-            this.props.setReq(req);
+          req.id = change.doc.id;
+          req && req.sentTo === this.props.user.uid && req.status === "PENDING" && this.props.setReq(req);
         }
       })
     })
 
   }
   render = () => {
-    
     return (
       <div>
+        <Popup/>
         {this.props.alert}
         <Routes />
+        
       </div>
     );
   }
@@ -61,6 +63,7 @@ var actions = {
 }
 
 var mapState = (state)=>({
+  user: state.user,
   alert: state.alert
 })
 
