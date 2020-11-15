@@ -7,6 +7,7 @@ import {
   Select,
   Typography,
   withStyles,
+  Divider
 } from "@material-ui/core";
 import {v4 as uuid} from 'uuid'
 import React from "react";
@@ -131,7 +132,43 @@ class Dashboard extends React.Component {
               <Typography className={classes.heading} variant="h1">
                 All Meetings
               </Typography>
-              {this.props.requests.map((user) => (
+              {this.props.pendingRequests.map((user) => (
+                <Grid key={uuid()} container className={classes.row} alignItems="center">
+                  <Grid item xs={1}>
+                    <Avatar src={`${user.images[0]}`} />
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Typography align="center"><b>{user.userName}</b></Typography>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Select variant="outlined" className={classes.select} onChange={(e)=>this.changeStatus(user.docId,e.target.value)} value={user.status}>
+                      <MenuItem value="PENDING">PENDING</MenuItem>
+                      <MenuItem value="CANCELLED">CANCELLED</MenuItem>
+                      <MenuItem value="ACCEPTED">ACCEPTED</MenuItem>
+                      <MenuItem value="COMPLICATED">COMPLICATED</MenuItem>
+                      <MenuItem value="DONE">DONE</MenuItem>
+                    </Select>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Typography className={classes.date} align="center">{user.date}</Typography>
+                  </Grid>
+                  <Grid item xs={2}>
+                    <Button
+                      onClick={() => {
+                        window.open(
+                          `https://www.google.com/maps/dir/${user.location.latitude},${user.location.longitude}`,
+                          "_blank"
+                        );
+                      }}
+                      color="secondary"
+                    >
+                      Location
+                    </Button>
+                  </Grid>
+                </Grid>
+              ))}
+              <Divider />
+              {this.props.acceptedRequests.map((user) => (
                 <Grid key={uuid()} container className={classes.row} alignItems="center">
                   <Grid item xs={1}>
                     <Avatar src={`${user.images[0]}`} />
@@ -178,6 +215,8 @@ class Dashboard extends React.Component {
 var mapState = (state) => ({
   user: state.user,
   requests: state.requests,
+  pendingRequests: state.requests.filter(item=>item.status==="PENDING"),
+  acceptedRequests: state.requests.filter(item=>item.status!=="PENDING"),
 });
 
 var actions = {
