@@ -81,13 +81,13 @@ class Popup extends React.Component{
     }
     render = ()=>{
         if(this.props.req){
-            var {req:{id,userName,placeName,location:{latitude,longitude}},classes,setReq,acceptReq,getRequests} = this.props;
+            var {req:{id,userName,placeName,location:{latitude,longitude},images},classes,setReq,acceptReq,getRequests,user} = this.props;
             return(
                 <div className={`${classes.root} reqPopup flex`}>
                     <div className={classes.container}>
                     <Paper elevation={3} className={classes.paper}>
                         <div className={classes.imageDiv}>
-                            <Avatar className={classes.avatar} src={"https://as2.ftcdn.net/jpg/02/31/42/41/500_F_231424154_JFLnuKgqNMk7S8Yi4IGU8529hi6MtO62.jpg"}/><Avatar className={classes.avatar} src={"https://as2.ftcdn.net/jpg/02/31/42/41/500_F_231424154_JFLnuKgqNMk7S8Yi4IGU8529hi6MtO62.jpg"}/>
+                            <Avatar className={classes.avatar} src={images[0]}/><Avatar className={classes.avatar} src={user.images[0]}/>
                         </div>
                         <Typography align="center" className={classes.name}>{userName}</Typography>
                         <Typography align="center" onClick={()=>this.getDirection(latitude,longitude)} className={classes.place}>{placeName}</Typography>
@@ -102,7 +102,8 @@ class Popup extends React.Component{
 }
 
 var mapState = (state) =>({
-    req:state.currentReq
+    req:state.currentReq,
+    user: state.user,
 })
 var actions = {
     setReq,

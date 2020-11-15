@@ -26,7 +26,6 @@ import { setAlert } from './../Redux/alert/alertActions';
             }
         }
         componentDidMount = ()=>{
-            console.log("mount")
             this.props.setAlert("Current Location will be selected if location services are enabled.","info");
         }
         onCircleInteraction = (childKey, childProps, mouse) => {

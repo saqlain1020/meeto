@@ -53,7 +53,7 @@ function HorizontalLabelPositionBelowStepper(props) {
         }
         props.saveProfile(obj);
         props.uploadImages(images);
-        props.setAlert("Uploading Info...","Info")
+        props.setAlert("Uploading Info...","info")
     }
 
     const handleNext = () => {

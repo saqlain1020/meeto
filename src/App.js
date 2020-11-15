@@ -34,10 +34,14 @@ class App extends React.Component {
     //Firebase listener
     firebase.firestore().collection("requests").onSnapshot((snap)=>{
       console.log("in listener");
-      snap.docChanges().forEach((change)=>{
+      snap.docChanges().forEach(async(change)=>{
         if(change.type === "added"){
           let req = change.doc.data();
           req.id = change.doc.id;
+
+          let data = await firebase.firestore().collection("users").doc(req.sentBy).get()
+          data = data.data();
+          req.images = data.images;
           req && req.sentTo === this.props.user.uid && req.status === "PENDING" && this.props.setReq(req);
         }
       })
