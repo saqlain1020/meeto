@@ -9,10 +9,8 @@ import store from './Redux/store';
 
 ReactDOM.render(
     <Provider store = {store}>
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
-    {/* <HashRouter baseame="/"> */}
+    <BrowserRouter>
     <App />
-    {/* </HashRouter> */}
     </BrowserRouter>
     </Provider>,
   document.getElementById('root')
