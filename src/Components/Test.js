@@ -4,6 +4,7 @@
     import { geolocated } from 'react-geolocated';
     import { connect } from 'react-redux';
     import {setLocation} from '../Redux/user/userActions'
+import { setAlert } from './../Redux/alert/alertActions';
 
     class SimpleMap extends React.Component {
         state = {
@@ -16,21 +17,18 @@
         componentDidUpdate = (preProp) => {
             if (preProp !== this.props) {
                 this.setState({
-                    lat: this.props.coords.latitude,
-                    lng: this.props.coords.longitude,
-                    center: [this.props.coords.latitude, this.props.coords.longitude],
+                    lat: this.props.coords?this.props.coords.latitude: 0,
+                    lng: this.props.coords?this.props.coords.longitude:0,
+                    center: [this.props.coords?this.props.coords.latitude: 0, this.props.coords?this.props.coords.longitude:0],
                 },()=>{
                     this.props.setLocation({latitude:this.state.lat,longitude:this.state.lng})
                 })
             }
         }
-        // componentDidMount = ()=>{
-        //     console.log(this.props)
-        //     this.setState({
-        //         lat: this.props.coords.latitude,
-        //         lng: this.props.coords.longitude
-        //     })
-        // }
+        componentDidMount = ()=>{
+            console.log("mount")
+            this.props.setAlert("Current Location will be selected if location services are enabled.","info");
+        }
         onCircleInteraction = (childKey, childProps, mouse) => {
             // function is just a stub to test callbacks
             this.setState({
@@ -84,6 +82,7 @@
 
     var actions={
         setLocation,
+        setAlert,
     }
 
     export default connect(null,actions)(geolocated()(SimpleMap));
