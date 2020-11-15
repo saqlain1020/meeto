@@ -39,6 +39,9 @@ var styles = (theme) => ({
   row: {
     margin: "10px 0",
   },
+  select:{
+    fontSize: "10px"
+  },
 });
 
 class Dashboard extends React.Component {
@@ -134,7 +137,7 @@ class Dashboard extends React.Component {
                     <Typography>{user.userName}</Typography>
                   </Grid>
                   <Grid item xs={3}>
-                    <Select onChange={(e)=>this.changeStatus(user.docId,e.target.value)} value={user.status}>
+                    <Select variant="outlined" className={classes.select} onChange={(e)=>this.changeStatus(user.docId,e.target.value)} value={user.status}>
                       <MenuItem value="PENDING">PENDING</MenuItem>
                       <MenuItem value="CANCELLED">CANCELLED</MenuItem>
                       <MenuItem value="ACCEPTED">ACCEPTED</MenuItem>
