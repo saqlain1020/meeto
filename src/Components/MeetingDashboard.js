@@ -117,6 +117,7 @@ class MeetingDashboard extends Component {
       this.setState({
         mapOpen: !this.state.mapOpen,
         userSelected: this.state.simUsers[0].uid,
+        selectedUserName: this.state.simUsers[0].nickname,
       });
     }
   };
@@ -175,7 +176,7 @@ class MeetingDashboard extends Component {
             }}
           >
             <div style={{ width: "400px", height: "400px" }}>
-              <MeetLocationMap userSelected={this.state.userSelected} />
+              <MeetLocationMap userSelected={this.state.userSelected} selectedUserName={this.state.selectedUserName}/>
             </div>
           </Modal>
         </div>

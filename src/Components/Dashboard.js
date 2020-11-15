@@ -14,7 +14,8 @@ import ProfileStepper from "./ProfileStepper";
 import firebase from "../Util/Firebase";
 import { connect } from "react-redux";
 import swal from "@sweetalert/with-react";
-import { getRequests } from "../Redux/requests/requestsActions";
+import { getRequests } from "./../Redux/requests/requestsActions";
+import { changeStatus } from './../Redux/requests/requestsActions';
 
 var styles = (theme) => ({
   stepper: {
@@ -88,6 +89,9 @@ class Dashboard extends React.Component {
     }
     this.props.getRequests();
   };
+  changeStatus = (id,value)=>{
+    this.props.changeStatus(id,value);
+  }
   render = () => {
     const { classes } = this.props;
     return (
@@ -130,7 +134,7 @@ class Dashboard extends React.Component {
                     <Typography>{user.userName}</Typography>
                   </Grid>
                   <Grid item xs={3}>
-                    <Select value={user.status}>
+                    <Select onChange={(e)=>this.changeStatus(user.docId,e.target.value)} value={user.status}>
                       <MenuItem value="PENDING">PENDING</MenuItem>
                       <MenuItem value="CANCELLED">CANCELLED</MenuItem>
                       <MenuItem value="ACCEPTED">ACCEPTED</MenuItem>
@@ -172,6 +176,7 @@ var mapState = (state) => ({
 
 var actions = {
   getRequests,
+  changeStatus,
 };
 
 export default connect(mapState, actions)(withStyles(styles)(Dashboard));

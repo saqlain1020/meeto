@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setReq } from './../Redux/currentReq/currentReqActions';
+import { setReq ,acceptReq} from './../Redux/currentReq/currentReqActions';
 import { withStyles, Paper, Typography, Button } from '@material-ui/core';
 import { Avatar } from '@material-ui/core';
 
@@ -89,7 +89,7 @@ class Popup extends React.Component{
     }
     render = ()=>{
         if(this.props.req){
-            var {req:{userName,placeName,location:{latitude,longitude}},classes,setReq} = this.props;
+            var {req:{id,userName,placeName,location:{latitude,longitude}},classes,setReq,acceptReq} = this.props;
             return(
                 <div className={`${classes.root} reqPopup flex`}>
                     <div className={classes.container}>
@@ -99,7 +99,7 @@ class Popup extends React.Component{
                         </div>
                         <Typography align="center" className={classes.name}>{userName}</Typography>
                         <Typography align="center" onClick={()=>this.getDirection(latitude,longitude)} className={classes.place}>{placeName}</Typography>
-                        <Typography align="center" ><Button variant="outlined" onClick={()=>setReq(null)} className={classes.button} color="secondary">Cancrl</Button>&nbsp;&nbsp;<Button variant="outlined" className={classes.button} color="primary">Confirm</Button></Typography>
+                        <Typography align="center" ><Button variant="outlined" onClick={()=>setReq(null)} className={classes.button} color="secondary">Cancel</Button>&nbsp;&nbsp;<Button variant="outlined" onClick={()=>acceptReq(id)} className={classes.button} color="primary">Confirm</Button></Typography>
                     </Paper>
                     </div>
                 </div>
@@ -114,6 +114,7 @@ var mapState = (state) =>({
 })
 var actions = {
     setReq,
+    acceptReq,
 }
 
 export default connect(mapState,actions)(withStyles(styles)(Popup));

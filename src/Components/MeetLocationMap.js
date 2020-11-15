@@ -155,6 +155,7 @@ class SimpleMap extends React.Component {
         longitude: lng,
       },
       userName: this.props.user.nickname,
+      selectedUserName: this.props.selectedUserName,
     };
     try {
       await firebase.firestore().collection("requests").add(obj);
