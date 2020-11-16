@@ -14,12 +14,6 @@ import {
   Input,
   Typography,
 } from "@material-ui/core";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
 import { withRouter } from "react-router-dom";
 var foursquare = require("react-foursquare")({
   clientID: "CLC2AOG5D0D2BE42BKXUOI1B4GO0311EAN2SBN5Z123R1WKN",

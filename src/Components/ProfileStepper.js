@@ -7,10 +7,10 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Chip, FormControl, Input, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
 import { DropzoneArea } from 'material-ui-dropzone'
-import GoogleMapReact from 'google-map-react';
+// import GoogleMapReact from 'google-map-react';
 import { geolocated } from 'react-geolocated';
-import Draggable from 'react-draggable';
-import RoomIcon from '@material-ui/icons/Room';
+// import Draggable from 'react-draggable';
+// import RoomIcon from '@material-ui/icons/Room';
 import Test from './Test';
 import { connect } from 'react-redux';
 import {saveProfile,uploadImages} from '../Redux/user/userActions'
@@ -64,12 +64,12 @@ function HorizontalLabelPositionBelowStepper(props) {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    const onCircleInteraction3 = (childKey, childProps, mouse) => {
+    // const onCircleInteraction3 = (childKey, childProps, mouse) => {
         // this.setState({draggable: true});
         // function is just a stub to test callbacks  
         // console.log('onCircleInteraction called with', childKey, childProps, mouse);
 
-    }
+    // }
 
     const handleReset = () => {
         setActiveStep(0);

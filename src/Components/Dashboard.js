@@ -1,7 +1,6 @@
 import {
   Avatar,
   Button,
-  Drawer,
   Grid,
   MenuItem,
   Select,
@@ -14,7 +13,6 @@ import React from "react";
 import ProfileStepper from "./ProfileStepper";
 import firebase from "../Util/Firebase";
 import { connect } from "react-redux";
-import swal from "@sweetalert/with-react";
 import { getRequests } from "./../Redux/requests/requestsActions";
 import { changeStatus } from './../Redux/requests/requestsActions';
 

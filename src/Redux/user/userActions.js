@@ -2,7 +2,6 @@ import firebase from '../../Util/Firebase'
 import { INITPROFILE, LOGINWITHFACEBOOK, SETLOCATION, SETUSER, SIGNINEMAILPASS, SIGNOUT, SIGNUP ,ADDIMAGES} from "./userConstants"
 import swal from "sweetalert";
 import store from '../store'
-import { setAlert } from './../alert/alertActions';
 
 export var signInWithEmailPassword = (email, password) => async (dispatch) => {
     try {
@@ -68,7 +67,7 @@ export var loginwithfacebook = () => async (dispatch) => {
 }
 
 export var signOut = () => async (dispatch) => {
-    let user = await firebase.auth().signOut();
+    await firebase.auth().signOut();
     dispatch({
         type: SIGNOUT,
         payload: {

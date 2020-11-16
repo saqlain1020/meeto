@@ -1,5 +1,4 @@
 import { INITPROFILE, LOGINWITHFACEBOOK, SETLOCATION, SETUSER, SIGNINEMAILPASS, SIGNOUT, SIGNUP,ADDIMAGES } from "./userConstants";
-import firebase from "../../Util/Firebase"
 
 var initialState = {};
 

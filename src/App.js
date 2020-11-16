@@ -52,12 +52,12 @@ class App extends React.Component {
   }
   handlePermission =()=> {
     navigator.permissions.query({name:'geolocation'}).then((result)=> {
-      if (result.state == 'granted') {
+      if (result.state === 'granted') {
         this.report(result.state);
-      } else if (result.state == 'prompt') {
+      } else if (result.state === 'prompt') {
         this.report(result.state);
         navigator.geolocation.getCurrentPosition(()=>setAlert("Location Enabled","success"),()=>swal("Enable Location :/","","error"));
-      } else if (result.state == 'denied') {
+      } else if (result.state === 'denied') {
         this.report(result.state);
         // geoBtn.style.display = 'inline';
       }

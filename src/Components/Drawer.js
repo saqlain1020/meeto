@@ -17,7 +17,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
-import { Avatar, Fab, Menu, MenuItem, Grid } from "@material-ui/core";
+import { Avatar, Fab, Menu, MenuItem } from "@material-ui/core";
 import { connect } from "react-redux";
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';

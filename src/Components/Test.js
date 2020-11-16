@@ -5,7 +5,6 @@
     import { connect } from 'react-redux';
     import {setLocation} from '../Redux/user/userActions'
     import { setAlert } from './../Redux/alert/alertActions';
-    import swal from 'sweetalert';
 
     class SimpleMap extends React.Component {
         state = {

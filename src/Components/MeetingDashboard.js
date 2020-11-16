@@ -1,5 +1,4 @@
 import {
-  Button,
   Card,
   CardContent,
   Modal,
@@ -8,7 +7,6 @@ import {
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getUsers, setUsers } from "../Redux/similarUsers/similarUsersActions";
-import firebase from "../Util/Firebase";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import CancelIcon from "@material-ui/icons/Cancel";
 import AwesomeSlider from "react-awesome-slider";
