@@ -4,7 +4,8 @@
     import { geolocated } from 'react-geolocated';
     import { connect } from 'react-redux';
     import {setLocation} from '../Redux/user/userActions'
-import { setAlert } from './../Redux/alert/alertActions';
+    import { setAlert } from './../Redux/alert/alertActions';
+    import swal from 'sweetalert';
 
     class SimpleMap extends React.Component {
         state = {
@@ -14,7 +15,11 @@ import { setAlert } from './../Redux/alert/alertActions';
             lat: 45,
             lng: 41
         };
-        componentDidUpdate = (preProp) => {
+        componentDidUpdate = async(preProp) => {
+            console.log(this.props.coords);
+            let permissionStatus = await navigator.permissions.query({name:'geolocation'});
+            if(permissionStatus.state === "denied")
+                setAlert("Please Enable Location for auto location detection","error");
             if (preProp !== this.props) {
                 this.setState({
                     lat: this.props.coords?this.props.coords.latitude: 0,
@@ -25,6 +30,7 @@ import { setAlert } from './../Redux/alert/alertActions';
                 })
             }
         }
+
         componentDidMount = ()=>{
             this.props.setAlert("Current Location will be selected if location services are enabled.","info");
         }

@@ -9,7 +9,7 @@ import firebase from './Util/Firebase'
 import { setAlert } from './Redux/alert/alertActions';
 import { setReq } from './Redux/currentReq/currentReqActions';
 import Popup from './Components/Popup';
-
+import swal from 'sweetalert';
 
 class App extends React.Component {
 
@@ -30,7 +30,7 @@ class App extends React.Component {
     window.onerror = (message, source, lineno, colno, error)=> {
       this.props.setAlert(message,"error");
     }
-
+    
     //Firebase listener
     firebase.firestore().collection("requests").onSnapshot((snap)=>{
       console.log("in listener");
@@ -47,6 +47,28 @@ class App extends React.Component {
       })
     })
 
+    //
+    this.handlePermission();
+  }
+  handlePermission =()=> {
+    navigator.permissions.query({name:'geolocation'}).then((result)=> {
+      if (result.state == 'granted') {
+        this.report(result.state);
+      } else if (result.state == 'prompt') {
+        this.report(result.state);
+        navigator.geolocation.getCurrentPosition(()=>setAlert("Location Enabled","success"),()=>swal("Enable Location :/","","error"));
+      } else if (result.state == 'denied') {
+        this.report(result.state);
+        // geoBtn.style.display = 'inline';
+      }
+      result.onchange = () =>{
+        this.report(result.state);
+      }
+    });
+  }
+  
+  report=(state)=> {
+    console.log('Permission ' + state);
   }
   render = () => {
     return (
