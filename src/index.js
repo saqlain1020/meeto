@@ -8,7 +8,7 @@ import store from './Redux/store';
 // import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-  <React.StrictMode>~
+  <React.StrictMode>
     <Provider store = {store}>
     <BrowserRouter>
     <App />
