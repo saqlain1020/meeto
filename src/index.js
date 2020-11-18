@@ -8,11 +8,13 @@ import store from './Redux/store';
 // import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
+  <React.StrictMode>~
     <Provider store = {store}>
     <BrowserRouter>
     <App />
     </BrowserRouter>
-    </Provider>,
+    </Provider>
+    </React.StrictMode>,
   document.getElementById('root')
 );
 
