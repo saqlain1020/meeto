@@ -1,3 +1,7 @@
+# Introduction
+This is a full stack meeting scheduling app which shows related users using a certain algorithm near you and shows you some popular places where you can meet and schedule a meeting.
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
